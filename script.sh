@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 MASON_NAME=openssl
-MASON_VERSION=1.0.1i
+MASON_VERSION=1.0.2
 MASON_LIB_FILE=lib/libssl.a
 MASON_PKGCONFIG_FILE=lib/pkgconfig/openssl.pc
 
@@ -9,8 +9,8 @@ MASON_PKGCONFIG_FILE=lib/pkgconfig/openssl.pc
 
 function mason_load_source {
     mason_download \
-        https://www.openssl.org/source/openssl-1.0.1i.tar.gz \
-        c4aeb799f5eec8fe43559e2ff63e0ab4672ab3c2
+        https://www.openssl.org/source/openssl-1.0.2.tar.gz \
+        edb5a59838b24d0845950feed47dae014c66b2ab
 
     mason_extract_tar_gz
 
@@ -30,6 +30,8 @@ function mason_prepare_compile {
             MASON_OS_COMPILER="android-armv7"
         elif [ ${MASON_ANDROID_ARCH} = 'x86' ]; then
             MASON_OS_COMPILER="android-x86"
+        elif [ ${MASON_ANDROID_ARCH} = 'mips' ]; then
+            MASON_OS_COMPILER="android-mips"
         else
             MASON_OS_COMPILER="android"
         fi
