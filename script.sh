@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 MASON_NAME=geowave-jace
-MASON_VERSION=0.8.9
-MASON_LIB_FILE=lib/libjace.a
+MASON_VERSION=0.9.1
+MASON_LIB_FILE=lib/libgeowave.a
 
 . ${MASON_DIR:-~/.mason}/mason.sh
 
 function mason_load_source {
-    mason_download http://s3.amazonaws.com/geowave-rpms/release/TARBALL/geowave-0.8.9-9639eb4-jace-source.tar.gz \
+    mason_download http://s3.amazonaws.com/geowave-rpms/release/TARBALL/geowave-0.9.1-???-jace-source.tar.gz \
     6c6def77cc02ede781876ef095a3583e501c5acd
 
     mason_extract_tar_gz
@@ -36,6 +36,7 @@ function mason_prepare_compile {
 }
 
 function mason_compile {
+    cd geowave-jace
     mkdir -p build
     cd build
     cmake ../ \
@@ -46,7 +47,7 @@ function mason_compile {
     make -j${MASON_CONCURRENCY}
     make install
     mkdir -p ${MASON_PREFIX}/bin
-    mv ../*.jar ${MASON_PREFIX}/bin
+    mv ../bin/*.jar ${MASON_PREFIX}/bin
 }
 
 function mason_cflags {
@@ -54,7 +55,7 @@ function mason_cflags {
 }
 
 function mason_ldflags {
-    echo "-L${MASON_PREFIX}/lib -ljace"
+    echo "-L${MASON_PREFIX}/lib -lgeowave"
 }
 
 function mason_clean {
